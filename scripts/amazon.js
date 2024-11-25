@@ -1,3 +1,7 @@
+import { cart } from "../data/cart.js";//若用Script导入js文件，需要保证文件顺序正确
+//但使用module导入时则无需担心
+// import { cart as myCart } from "../data/cart.js";
+
 
 let productsHTML ='';
 
