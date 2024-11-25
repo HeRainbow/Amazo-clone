@@ -84,6 +84,10 @@ document.querySelectorAll('.js-add-to-cart-button')//选定所有<button>生成�
         quantity: 1
       });
     }
-    console.log(cart);
+    let cartQuantity = 0;//计算当前购物车中物品总数
+    cart.forEach((item)=>{
+      cartQuantity += item.quantity;
+    });
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
     })
   })
