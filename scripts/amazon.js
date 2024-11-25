@@ -48,11 +48,42 @@ products.forEach((product)=>{
         Added
       </div>
 
-      <button class="add-to-cart-button button-primary">
+      <button class="add-to-cart-button button-primary js-add-to-cart-button"
+      data-product-id="${product.id}">
         Add to Cart
       </button>
+      <!-- 可以使用dataAttribute标记特定元素的额外信息，使用时以 'data-*' 为开头
+      例如上述代码中data-product-id，后续可使用dataset访问所有的data-* -->
     </div>
   `;
 });
-console.log(productsHTML);
-document.querySelector('.js-products-grid').innerHTML = productsHTML;
+
+document.querySelector('.js-products-grid')
+  .innerHTML = productsHTML;
+document.querySelectorAll('.js-add-to-cart-button')//选定所有<button>生成一个对象的数组
+  .forEach((button)=>{//每个<button>都创建一个监听器
+    button.addEventListener('click',()=>{
+      //可以使用dataAttribute标记特定元素的额外信息，使用时以 'data-*' 为开头
+      //例如上述代码中data-product-id，后续可使用dataset访问所有的data-*
+      const productId = button.dataset.productId;//注意将此处的破折号-换成大写字母N
+      
+      let matchingItem;//记录是否当前物品已经在购物车里存在
+
+      cart.forEach((item)=>{
+        if(productId === item.productId) {
+          matchingItem = item;
+        }
+      });
+
+      if(matchingItem){//如果购物车中已经有当前的物品，则计数加一
+        matchingItem.quantity +=1;
+      }
+      else {//如果购物车中没有当前的物品，则在数组中加入产品名称即数量
+        cart.push({
+        productId: productId,
+        quantity: 1
+      });
+    }
+    console.log(cart);
+    })
+  })
