@@ -1,7 +1,10 @@
-import { cart } from "../data/cart.js";//若用Script导入js文件，需要保证文件顺序正确
+import { cart, addToCart } from "../data/cart.js";//若用Script导入js文件，需要保证文件顺序正确
 //但使用module导入时则无需担心
 // import { cart as myCart } from "../data/cart.js";
 import { products } from "../data/products.js";
+//另外一种写法：import * cartModule from "../data/cart.js";
+//cartModule.cart
+//cartModule.addToCart('id');
 
 let productsHTML ='';
 
@@ -64,34 +67,23 @@ products.forEach((product)=>{
 
 document.querySelector('.js-products-grid')
   .innerHTML = productsHTML;
+
+function updateCartQuantity() {
+  let cartQuantity = 0;//计算当前购物车中物品总数
+  cart.forEach((cartItem)=>{
+    cartQuantity += cartItem.quantity;
+  });
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
+
 document.querySelectorAll('.js-add-to-cart-button')//选定所有<button>生成一个对象的数组
   .forEach((button)=>{//每个<button>都创建一个监听器
     button.addEventListener('click',()=>{
       //可以使用dataAttribute标记特定元素的额外信息，使用时以 'data-*' 为开头
       //例如上述代码中data-product-id，后续可使用dataset访问所有的data-*
       const productId = button.dataset.productId;//注意将此处的破折号-换成大写字母N
-      
-      let matchingItem;//记录是否当前物品已经在购物车里存在
-
-      cart.forEach((item)=>{
-        if(productId === item.productId) {
-          matchingItem = item;
-        }
-      });
-
-      if(matchingItem){//如果购物车中已经有当前的物品，则计数加一
-        matchingItem.quantity +=1;
-      }
-      else {//如果购物车中没有当前的物品，则在数组中加入产品名称即数量
-        cart.push({
-        productId: productId,
-        quantity: 1
-      });
-    }
-    let cartQuantity = 0;//计算当前购物车中物品总数
-    cart.forEach((item)=>{
-      cartQuantity += item.quantity;
-    });
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+      addToCart(productId);
+      updateCartQuantity();
+   
     })
   })
