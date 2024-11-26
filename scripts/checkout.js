@@ -109,6 +109,15 @@ document.querySelectorAll('.js-delete-link')
       const container = document.querySelector(
         `.js-cart-item-container-${productId}`)//使用DOM通过productId选中对应的container
       container.remove();
+      updateCartQuantity();
     })
   });
 
+function updateCartQuantity(){
+  let cartQuantity = 0;//计算当前购物车中物品总数
+  cart.forEach((cartItem)=>{
+    cartQuantity += cartItem.quantity;
+  });
+  document.querySelector('.js-check-out-items').innerHTML = `${cartQuantity} items`;
+}
+updateCartQuantity();

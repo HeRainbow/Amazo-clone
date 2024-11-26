@@ -48,3 +48,11 @@ export function removeFromCart(productId){
   
   saveToStorage();
 }
+export function calculateCartQuantity() {
+  let cartQuantity = 0;//计算当前购物车中物品总数
+  cart.forEach((cartItem)=>{
+    cartQuantity += cartItem.quantity;
+  });
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+  document.querySelector('.js-check-out-items').innerHTML = `${cartQuantity} items`;
+}

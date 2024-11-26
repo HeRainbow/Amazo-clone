@@ -6,6 +6,8 @@ import { products } from "../data/products.js";
 //cartModule.cart
 //cartModule.addToCart('id');
 import { formatCurrency } from "./utils/money.js";
+
+updateCartQuantity();
 let productsHTML ='';
 
 products.forEach((product)=>{
@@ -74,6 +76,7 @@ function updateCartQuantity() {
     cartQuantity += cartItem.quantity;
   });
   document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+  //document.querySelector('.js-check-out-items').innerHTML = `${cartQuantity} items`;
 }
 
 document.querySelectorAll('.js-add-to-cart-button')//选定所有<button>生成一个对象的数组
