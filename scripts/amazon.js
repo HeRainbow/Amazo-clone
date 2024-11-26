@@ -5,7 +5,7 @@ import { products } from "../data/products.js";
 //另外一种写法：import * cartModule from "../data/cart.js";
 //cartModule.cart
 //cartModule.addToCart('id');
-
+import { formatCurrency } from "./utils/money.js";
 let productsHTML ='';
 
 products.forEach((product)=>{
@@ -30,7 +30,7 @@ products.forEach((product)=>{
 
       <div class="product-price">
       <!-- 可以使用.toFix()显示小数，括号内输入小数后几位 -->
-        $${(product.priceCents /100).toFixed(2)}
+        $${formatCurrency(product.priceCents)}
       </div>
 
       <div class="product-quantity-container">
