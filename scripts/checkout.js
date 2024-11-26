@@ -1,8 +1,11 @@
-import { cart, removeFromCart } from "../data/cart.js";
+import { cart, removeFromCart, calculateCartQuantity } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";//一个点表示当前文件夹
 
 let cartSummeryHTML = '';
+
+let cartQuantity = calculateCartQuantity();
+document.querySelector('.js-check-out-items').innerHTML = `${cartQuantity} items`;
 
 cart.forEach((cartItem)=>{
   const productId = cartItem.productId;
@@ -109,15 +112,7 @@ document.querySelectorAll('.js-delete-link')
       const container = document.querySelector(
         `.js-cart-item-container-${productId}`)//使用DOM通过productId选中对应的container
       container.remove();
-      updateCartQuantity();
+      cartQuantity = calculateCartQuantity();
+      document.querySelector('.js-check-out-items').innerHTML = `${cartQuantity} items`;
     })
   });
-
-function updateCartQuantity(){
-  let cartQuantity = 0;//计算当前购物车中物品总数
-  cart.forEach((cartItem)=>{
-    cartQuantity += cartItem.quantity;
-  });
-  document.querySelector('.js-check-out-items').innerHTML = `${cartQuantity} items`;
-}
-updateCartQuantity();
