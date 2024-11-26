@@ -1,4 +1,4 @@
-export const cart = [
+export let cart = [
   {
     productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
     quantity: 2
@@ -27,4 +27,16 @@ export function addToCart(productId){
     quantity: 1
   });
 }
+}
+// 1.创建一个新的数组
+// 2.遍历旧数组
+// 3.将除了productId之外的所有值都存入新数组
+export function removeFromCart(productId){
+  cart =  cart.filter((cartItem)=>{
+    if(cartItem.productId===productId){
+      return false
+    }else{
+      return true
+    }
+  });
 }

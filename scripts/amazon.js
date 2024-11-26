@@ -60,7 +60,7 @@ products.forEach((product)=>{
         Add to Cart
       </button>
       <!-- 可以使用dataAttribute标记特定元素的额外信息，使用时以 'data-*' 为开头
-      例如上述代码中data-product-id，后续可使用dataset访问所有的data-* -->
+      例如上述代码中data-product-id，后续可使用.dataset.*访问所有的data-* -->
     </div>
   `;
 });

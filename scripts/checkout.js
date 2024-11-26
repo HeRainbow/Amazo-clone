@@ -1,6 +1,7 @@
-import { cart } from "../data/cart.js";
+import { cart, removeFromCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";//一个点表示当前文件夹
+
 let cartSummeryHTML = '';
 
 cart.forEach((cartItem)=>{
@@ -38,7 +39,8 @@ cart.forEach((cartItem)=>{
             <span class="update-quantity-link link-primary">
               Update
             </span>
-            <span class="delete-quantity-link link-primary">
+            <span class="delete-quantity-link link-primary js-delete-link"
+            data-product-id="${matchingProduct.id}">
               Delete
             </span>
           </div>
@@ -91,5 +93,16 @@ cart.forEach((cartItem)=>{
       </div>
     </div>`;
 });
-console.log(cartSummeryHTML);
 document.querySelector('.js-order-summery').innerHTML = cartSummeryHTML;
+
+// 实现从结算页面删除产品需要
+// 1.从cart数组中删除数据
+// 2.删除对应的HTML代码
+document.querySelectorAll('.js-delete-link')
+  .forEach((link)=>{
+    link.addEventListener('click',()=>{
+      const productId = link.dataset.productId;//使用data-*来标记需要的元素
+      removeFromCart(productId);
+      console.log(cart);
+    })
+  });
