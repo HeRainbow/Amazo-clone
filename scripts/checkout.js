@@ -16,7 +16,8 @@ cart.forEach((cartItem)=>{
   });
 
 
-    cartSummeryHTML+=` <div class="cart-item-container">
+    cartSummeryHTML+=` <div class="cart-item-container 
+    js-cart-item-container-${matchingProduct.id}">
       <div class="delivery-date">
         Delivery date: Tuesday, June 21
       </div>
@@ -96,13 +97,18 @@ cart.forEach((cartItem)=>{
 document.querySelector('.js-order-summery').innerHTML = cartSummeryHTML;
 
 // 实现从结算页面删除产品需要
-// 1.从cart数组中删除数据
+// 1.从cart数组中删除对应的数据:cart.js中的removeFromCart();
 // 2.删除对应的HTML代码
+// 使用DOM后用.remove()方法删除对应HTML代码
 document.querySelectorAll('.js-delete-link')
   .forEach((link)=>{
     link.addEventListener('click',()=>{
       const productId = link.dataset.productId;//使用data-*来标记需要的元素
       removeFromCart(productId);
-      console.log(cart);
+
+      const container = document.querySelector(
+        `.js-cart-item-container-${productId}`)//使用DOM通过productId选中对应的container
+      container.remove();
     })
   });
+
