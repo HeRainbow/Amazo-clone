@@ -1,4 +1,5 @@
-export let cart = [
+export let cart = JSON.parse(localStorage.getItem('cart')) ||
+[
   {
     productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
     quantity: 2
@@ -8,6 +9,10 @@ export let cart = [
     quantity: 1
   }
 ];
+
+function saveToStorage() {
+  localStorage.setItem('cart',JSON.stringify(cart));
+}
 
 export function addToCart(productId){
   let matchingItem;//记录是否当前物品已经在购物车里存在
@@ -27,6 +32,7 @@ export function addToCart(productId){
     quantity: 1
   });
 }
+  saveToStorage();
 }
 // 1.创建一个新的数组
 // 2.遍历旧数组
@@ -39,4 +45,6 @@ export function removeFromCart(productId){
       return true
     }
   });
+  
+  saveToStorage();
 }
