@@ -1,4 +1,4 @@
-import { cart, removeFromCart, calculateCartQuantity, updateQuantity } from "../data/cart.js";
+import { cart, removeFromCart, calculateCartQuantity, updateQuantity, updateDeliveryOption } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";//一个点表示当前文件夹
 import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
@@ -23,7 +23,8 @@ document.querySelector('.js-check-out-items').innerHTML = `${cartQuantity} items
 
 cart.forEach((cartItem)=>{
   const productId = cartItem.productId;
-
+  const deliveryOptionId = cartItem.deliveryOptionId;
+  
   let matchingProduct;
 
   products.forEach((product)=>{//扫描数据库以获取
@@ -31,7 +32,7 @@ cart.forEach((cartItem)=>{
       matchingProduct = product
     }
   });
-  const deliveryOptionId = cartItem.deliveryOptionId;
+
   let deliveryOption;
 
   deliveryOptions.forEach((option)=>{
@@ -97,7 +98,6 @@ cart.forEach((cartItem)=>{
 
 function deliveryOptionsHTML(matchingProduct,cartItem){
   let html = '';
-
   deliveryOptions.forEach((deliveryOption)=>{
     const today = dayjs();
     const deliveryDay = today.add(
@@ -114,7 +114,9 @@ function deliveryOptionsHTML(matchingProduct,cartItem){
     const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
     html +=
     `
-      <div class="delivery-option">
+      <div class="delivery-option js-delivery-option"
+      data-product-id="${matchingProduct.id}"
+      data-delivery-option-id="${deliveryOption.id}">
         <input type="radio" 
         ${isChecked ? 'checked' : ''}
           class="delivery-option-input"
@@ -183,4 +185,12 @@ document.querySelectorAll('.js-save-quantity-link')
       document.querySelector('.js-check-out-items').innerHTML = `${cartQuantity} items`;
       document.querySelector(`.js-quantity-label-${productId}`).innerHTML = inputValue;
     });
+})
+
+document.querySelectorAll('.js-delivery-option')
+  .forEach((element)=>{
+    element.addEventListener('click',()=>{
+      const {productId, deliveryOptionId} = element.dataset;
+      updateDeliveryOption(productId, deliveryOptionId);
+    })
 })

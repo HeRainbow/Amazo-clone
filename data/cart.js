@@ -68,3 +68,16 @@ export function updateQuantity(productId, newQuantity){
 
   saveToStorage();
 }
+
+export function updateDeliveryOption(productId, deliveryOptionId){
+  let matchingItem;//记录是否当前物品已经在购物车里存在
+
+  cart.forEach((cartItem)=>{
+    if(productId === cartItem.productId) {
+      matchingItem = cartItem;
+    }
+  });
+  matchingItem.deliveryOptionId = deliveryOptionId;
+  console.log(matchingItem.deliveryOptionId);
+  saveToStorage();
+}
