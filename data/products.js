@@ -1,3 +1,16 @@
+export function getProduct(productId){
+  let matchingProduct;
+
+  products.forEach((product)=>{//扫描数据库以获取
+    if(product.id === productId){//数据库中的为product.id,购物车中的为productId
+      matchingProduct = product
+      
+    }
+  });
+  return matchingProduct;
+}
+
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
