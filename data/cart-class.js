@@ -1,18 +1,19 @@
 class Cart{//类方法创建对象
+  
   cartItems;
-  localStorageKey;
+  #localStorageKey;
 
 
   constructor(localStorageKey){//构造函数
-    this.localStorageKey = localStorageKey;
+    this.#localStorageKey = localStorageKey;
     
-    this.loadFromStorage();
+    this.#loadFromStorage();
 
   }
 
 
-  loadFromStorage() {
-    this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey)) ||
+  #loadFromStorage() {
+    this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) ||
   [
     {
       productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
@@ -28,7 +29,7 @@ class Cart{//类方法创建对象
   }
 
   saveToStorage () {
-    localStorage.setItem(this.localStorageKey,JSON.stringify(this.cartItems));
+    localStorage.setItem(this.#localStorageKey,JSON.stringify(this.cartItems));
   }
 
 
@@ -106,13 +107,8 @@ class Cart{//类方法创建对象
 
 }
 
-
-
-
 const cart = new Cart('cart-oop');
 const businessCart = new Cart('cart-business');
-
-
 
 
 console.log(cart);
