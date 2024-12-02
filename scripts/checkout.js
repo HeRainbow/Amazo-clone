@@ -2,8 +2,20 @@ import { renderOrderSummary } from "./checkout/orderSummery.js";
 import { renderPamentSummery } from "./checkout/paymentSummery.js";
 // import '../data/cart-class.js';
 // import '../data/backend-pratice.js'
-import { loadProducts } from "../data/products.js";
+import { loadProducts, loadProductsFetch } from "../data/products.js";
 
+
+
+async function loadPage() {
+
+  await loadProductsFetch();//实现和then同样的结果
+  renderOrderSummary();
+  renderPamentSummery();
+}//返回一个promise，是promise的快捷方式
+
+
+loadPage();
+/*
 Promise.all([
 
 ]).then(()=>{
@@ -22,7 +34,7 @@ new Promise((resolve)=>{//resolve是一个函数，与done（）类似
   renderOrderSummary();
   renderPamentSummery();
 })
-
+*/
 /*
 loadProducts(()=>{
   renderOrderSummary();
