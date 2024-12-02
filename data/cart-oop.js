@@ -1,5 +1,5 @@
 
-function Cart(localStorageKey){
+function Cart(localStorageKey){//函数方法创建对象
   const cart = {
     cartItems: undefined,
   
