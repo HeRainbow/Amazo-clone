@@ -27,7 +27,7 @@ products.forEach((product)=>{
 
       <div class="product-rating-container">
         <img class="product-rating-stars"
-          src="images/ratings/rating-${product.rating.stars * 10}.png">
+          src="${product.getStarUrl()}">
         <div class="product-rating-count link-primary">
           ${product.rating.count}
         </div>
@@ -35,7 +35,7 @@ products.forEach((product)=>{
 
       <div class="product-price">
       <!-- 可以使用.toFix()显示小数，括号内输入小数后几位 -->
-        $${formatCurrency(product.priceCents)}
+        ${product.getPrice()}
       </div>
 
       <div class="product-quantity-container">
