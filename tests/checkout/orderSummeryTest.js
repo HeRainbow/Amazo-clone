@@ -1,8 +1,18 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummery.js";
 import { loadFromStorage, cart } from "../../data/cart.js";
+import { loadProducts } from "../../data/products.js";
+
+
+
 describe('test suite: renderOrderSummery',() => {
   const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
   const productId2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d';
+
+  beforeAll((done)=>{
+    loadProducts(()=>{
+      done();//只有等done()执行之后才继续执行后续代码
+    });
+  });
   beforeEach(() => {//先执行这段代码再执行其他it
     spyOn(localStorage,'setItem');
     document.querySelector('.js-test-container').innerHTML = `
@@ -24,6 +34,8 @@ describe('test suite: renderOrderSummery',() => {
       }]);//localStorage返回的是字符串
     });//第一个参数是我们想要模拟的对象，第二个参数是想要标记的方法
     loadFromStorage();
+
+
     renderOrderSummary();
   });
 
