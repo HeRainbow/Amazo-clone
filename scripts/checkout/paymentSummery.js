@@ -2,7 +2,7 @@ import { calculateCartQuantity, cart } from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../utils/money.js"
-
+import { addOrder } from "../../data/orders.js";
 
 export function renderPamentSummery (){
   let productPriceCents = 0;
@@ -55,10 +55,30 @@ export function renderPamentSummery (){
       $${formatCurrency(totalCents)}</div>
     </div>
 
-    <button class="place-order-button button-primary">
+    <button class="place-order-button button-primary 
+    js-place-order">
       Place your order
     </button>`;
     document.querySelector('.js-payment-summary')
       .innerHTML = paymentSummeryHTML;
     
+
+    document.querySelector('.js-place-order')
+      .addEventListener('click',async ()=>{
+        const response = await fetch('https://supersimplebackend.dev/orders',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            cart: cart
+          })
+        });//向后端发送cart数据
+        const order =  await response.json();//获取数据
+        console.log(order);
+        addOrder(order);
+
+
+        window.location.href = 'orders.html';
+    });
   }

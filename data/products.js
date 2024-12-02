@@ -96,6 +96,10 @@ export function loadProducts(fun){
     fun();
   });
 
+  xhr.addEventListener('erro', ()=>{
+    
+  } );
+
   xhr.open('GET','https://supersimplebackend.dev/products');
   xhr.send();
 }
